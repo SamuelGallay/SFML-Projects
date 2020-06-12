@@ -30,7 +30,7 @@ jobs:
         path: sfml_repo
     
     - name: packages_install
-      run: sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev
+      run: sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev libsystemd-dev
       
     # Runs a single command using the runners shell
     - name: Run a one-line script
