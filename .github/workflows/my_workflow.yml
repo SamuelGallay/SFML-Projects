@@ -28,7 +28,10 @@ jobs:
       with: 
         repository: SFML/SFML
         path: sfml_repo
-
+    
+    - name: packages_install
+      run: sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev
+      
     # Runs a single command using the runners shell
     - name: Run a one-line script
       run: echo Hello, world!
