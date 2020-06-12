@@ -10,41 +10,40 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
+        
+    - name: Installing packages
+      run: sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev libudev-dev libopenal-dev libvorbis-dev libflac++-dev libxrandr-dev
+
     - name: Cloning repository
       uses: actions/checkout@v2
       with:
         path: main_repo
-    
-    - name: Cloning SFML
-      shell: bash
-      run: |
-        [ ! -f sfml_repo ] &&  git clone --depth 1 https://github.com/SFML/SFML.git sfml_repo
-        cd sfml_repo && git pull
-    
-    - name: Installing packages
-      run: sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev libudev-dev libopenal-dev libvorbis-dev libflac++-dev libxrandr-dev
 
     - name: Caching SFML
       uses: actions/cache@v2
       env:
         cache-name: cache-sfml_repo
       with:
-        path: sfml_repo
+        path: sfml
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.run_id }}
         restore-keys: |
           ${{ runner.os }}-${{ env.cache-name }}-${{ github.run_id }}
           ${{ runner.os }}-${{ env.cache-name }}-
-
+    
+    - name: Cloning SFML
+      shell: bash
+      run: |
+        [ ! -f sfml_repo ] &&  git clone --depth 1 https://github.com/SFML/SFML.git sfml_repo
+        cd sfml_repo && git pull
 
     - name: Building SFML
       shell: bash
       run: |
-        pwd
-        mkdir -p sfml_build sfml_install
+        cd sfml_repo
+        mkdir -p build install
         du -hs *
-        cd sfml_build
-        cmake -DCMAKE_INSTALL_PREFIX=../sfml_install ../sfml_repo
+        cd build
+        cmake -DCMAKE_INSTALL_PREFIX=../install ..
         cmake --build .
         cmake --install .
         
