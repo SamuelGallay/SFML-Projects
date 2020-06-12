@@ -41,7 +41,6 @@ jobs:
       run: |
         cd sfml_repo
         mkdir -p build install
-        du -hs *
         cd build
         cmake -DCMAKE_INSTALL_PREFIX=../install ..
         cmake --build .
