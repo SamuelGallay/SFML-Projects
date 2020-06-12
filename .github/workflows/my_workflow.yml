@@ -31,12 +31,12 @@ jobs:
         cache-name: cache-sfml
       with:
         path: sfml_build
-        key: ${{ runner.os }}-sfml_build-${{ env.cache-name }}
+        key: ${{ runner.os }}-${{ env.cache-name }}
 
     - name: Building SFML
       shell: bash
       run: |
-        mkdir sfml_build sfml_install
+        mkdir -p sfml_build sfml_install
         cd sfml_build
         cmake -DCMAKE_INSTALL_PREFIX=../sfml_install ../sfml_repo
         cmake --build .
