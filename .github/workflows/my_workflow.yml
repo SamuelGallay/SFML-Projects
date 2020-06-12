@@ -33,7 +33,7 @@ jobs:
     - name: Cloning SFML
       shell: bash
       run: |
-        if [ ! -f sfml_repo ]; then git clone --depth 1 https://github.com/SFML/SFML.git sfml_repo fi
+        if [ ! -d sfml_repo ]; then git clone --depth 1 https://github.com/SFML/SFML.git sfml_repo fi
         cd sfml_repo && git pull
 
     - name: Building SFML
