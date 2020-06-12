@@ -22,12 +22,12 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
       with:
-        path: main
+        path: main_repo
     
     - uses: actions/checkout@v2
       with: 
         repository: SFML/SFML
-        path: sfml
+        path: sfml_repo
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
@@ -40,9 +40,15 @@ jobs:
         echo test, and deploy your project.
         
     - name: SFML
+      shell: bash
       run: |
         pwd
         ls
-        ls SFML
-        ls main
+        cd sfml_repo
+        mkdir build
+        mkdir install
+        cd build
+        cmake -DCMAKE_INSTALL_PREFIX=../install ..
+        cmake --build .
+        cmake --install .
         
