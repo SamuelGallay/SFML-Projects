@@ -45,6 +45,15 @@ jobs:
         cmake -DCMAKE_INSTALL_PREFIX=../install ..
         cmake --build .
         cmake --install .
-        
+
+    - name: Building Projects
+      shell: bash
+      run: |
+        cd main_repo
+	mkdir -p build install
+	cd build
+	cmake -DCMAKE_INSTALL_PREFIX=../install -DSFML_DIR=../../sfml_repo/install/lib64/cmake/SFML  ..
+        cmake --build .
+        cmake --install .
     
         

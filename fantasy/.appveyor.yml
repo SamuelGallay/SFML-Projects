@@ -1,0 +1,49 @@
+version: '{build}'
+
+image: Visual Studio 2017
+
+platform:
+  - Win32
+
+configuration:
+  - Release
+
+install:
+  - git submodule update --init --recursive
+
+before_build:
+  - IF NOT EXIST C:\projects\fantasy\SFML\install git clone https://github.com/SFML/SFML.git    
+  - IF NOT EXIST C:\projects\fantasy\SFML\install cd SFML
+  - IF NOT EXIST C:\projects\fantasy\SFML\install mkdir installTemp
+  - IF NOT EXIST C:\projects\fantasy\SFML\install mkdir build
+  - IF NOT EXIST C:\projects\fantasy\SFML\install cd build
+  - IF NOT EXIST C:\projects\fantasy\SFML\install cmake -DCMAKE_INSTALL_PREFIX=../installTemp -DBUILD_SHARED_LIBS=FALSE -DSFML_USE_STATIC_STD_LIBS=TRUE ..
+  - IF NOT EXIST C:\projects\fantasy\SFML\install msbuild INSTALL.vcxproj
+  - IF NOT EXIST C:\projects\fantasy\SFML\install cd ../../
+  - IF NOT EXIST C:\projects\fantasy\SFML\install mv C:\projects\fantasy\SFML\installTemp C:\projects\fantasy\SFML\install
+  - mkdir build
+  - mkdir install
+  - cd build
+  - cmake -DCMAKE_INSTALL_PREFIX=../install -DSFML_DIR="C:\projects\fantasy\SFML\install\lib\cmake\SFML" -DSFML_STATIC_LIBRARIES=TRUE ..
+  - cd ..
+
+build:
+  project: build\INSTALL.vcxproj
+
+after_build:
+  - cp SFML/install/bin/openal32.dll install/
+
+artifacts:
+  - path: install
+    name: fantasy-windows-32bits
+
+cache:
+  - C:\projects\fantasy\SFML\install -> .appveyor.yml
+
+deploy:
+  provider: GitHub
+  auth_token: 
+    secure: huiMZBxW7TQokBS6FppoWYg5jOF/hZSeiZRp5tIU5w2Vs25Ve0dQ+VTuMoRYQhMa
+  artifact: fantasy-windows-32bits
+  on:
+    appveyor_repo_tag: true
