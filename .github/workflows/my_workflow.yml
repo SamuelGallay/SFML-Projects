@@ -57,13 +57,16 @@ jobs:
         cmake --build .
         cmake --install .
         
-    - name: Tests
+    - name: Building AppImage
       shell: bash
       run: |
-        ldd main_repo/install/GameEngine
+        cd main_repo
+        mkdir appimage_packaging
+        cd appimage_packaging
+        ../misc/build_appimage.sh
         
     - name: Archive production artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: install_dir
-        path: main_repo/install
+        name: appimage_dir
+        path: main_repo/appimage_packaging
