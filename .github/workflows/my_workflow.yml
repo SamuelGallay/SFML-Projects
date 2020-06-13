@@ -50,10 +50,20 @@ jobs:
       shell: bash
       run: |
         cd main_repo
-	mkdir -p build install
-	cd build
-	cmake -DCMAKE_INSTALL_PREFIX=../install -DSFML_DIR=../../sfml_repo/install/lib64/cmake/SFML  ..
+        mkdir -p build install
+        cd build
+        ls $GITHUB_WORKSPACE/sfml_repo/install/lib/cmake/SFML
+        cmake -DCMAKE_INSTALL_PREFIX=../install -DSFML_DIR=$GITHUB_WORKSPACE/sfml_repo/install/lib/cmake/SFML  ..
         cmake --build .
         cmake --install .
-    
         
+    - name: Tests
+      shell: bash
+      run: |
+        ldd main_repo/install/GameEngine
+        
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: install_dir
+        path: main_repo/install
