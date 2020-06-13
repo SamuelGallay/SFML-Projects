@@ -54,7 +54,7 @@ jobs:
         cd main_repo
         mkdir -p build install
         cd build
-        ls $GITHUB_WORKSPACE/sfml_repo/install/lib/cmake/SFML
+        #ls $GITHUB_WORKSPACE/sfml_repo/install/lib/cmake/SFML
         #cmake -DCMAKE_INSTALL_PREFIX=../install -DSFML_DIR=$GITHUB_WORKSPACE/sfml_repo/install/lib/cmake/SFML  ..
         cmake -DCMAKE_INSTALL_PREFIX=../install ..
         cmake --build .
