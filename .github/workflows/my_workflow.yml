@@ -52,14 +52,9 @@ jobs:
         cd main_repo
         mkdir -p build install
         cd build
-        pwd
-        ls ..
-        ls ../..
-        ls ../../sfml_repo
-        ls ../../sfml_repo/install
-        ls ../../sfml_repo/install/lib64
-        ls ../../sfml_repo/install/lib64/cmake
-        ls ../../sfml_repo/install/lib64/cmake/SFML
-        cmake -DCMAKE_INSTALL_PREFIX=../install -DSFML_DIR=../../sfml_repo/install/lib64/cmake/SFML  ..
+        ls ../../sfml_repo/install/lib
+        ls ../../sfml_repo/install/lib/cmake
+        ls ../../sfml_repo/install/lib/cmake/SFML
+        cmake -DCMAKE_INSTALL_PREFIX=../install -DSFML_DIR=../../sfml_repo/install/lib/cmake/SFML  ..
         cmake --build .
         cmake --install .
