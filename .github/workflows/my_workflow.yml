@@ -56,3 +56,8 @@ jobs:
         cmake -DCMAKE_INSTALL_PREFIX=../install -DSFML_DIR=$GITHUB_WORKSPACE/sfml_repo/install/lib/cmake/SFML  ..
         cmake --build .
         cmake --install .
+        
+    - name: Tests
+      shell: bash
+      run: |
+        ldd main_repo/install/GameEngine
