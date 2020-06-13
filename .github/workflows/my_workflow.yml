@@ -22,7 +22,7 @@ jobs:
     - name: Caching SFML
       uses: actions/cache@v2
       env:
-        cache-name: cache-sfml
+        cache-name: cache-sfml-r
       with:
         path: sfml_repo
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.run_id }}
