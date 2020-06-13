@@ -42,9 +42,11 @@ jobs:
         cd sfml_repo
         mkdir -p build install
         cd build
-        cmake -DCMAKE_INSTALL_PREFIX=../install ..
+        #cmake -DCMAKE_INSTALL_PREFIX=../install ..
+        cmake ..
         cmake --build .
-        cmake --install .
+        #cmake --install .
+        sudo cmake --install .
 
     - name: Building Projects
       shell: bash
@@ -53,7 +55,8 @@ jobs:
         mkdir -p build install
         cd build
         ls $GITHUB_WORKSPACE/sfml_repo/install/lib/cmake/SFML
-        cmake -DCMAKE_INSTALL_PREFIX=../install -DSFML_DIR=$GITHUB_WORKSPACE/sfml_repo/install/lib/cmake/SFML  ..
+        #cmake -DCMAKE_INSTALL_PREFIX=../install -DSFML_DIR=$GITHUB_WORKSPACE/sfml_repo/install/lib/cmake/SFML  ..
+        cmake -DCMAKE_INSTALL_PREFIX=../install ..
         cmake --build .
         cmake --install .
         
