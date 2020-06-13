@@ -5,9 +5,8 @@
 #ifndef GAMEENGINE_STATE_H
 #define GAMEENGINE_STATE_H
 
-#include "ResourceHolder.h"
-
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 class GameEngine;
 
@@ -19,8 +18,7 @@ public:
 
     void build(
             const std::shared_ptr<GameEngine> &engine,
-            const std::shared_ptr<sf::RenderWindow> &window,
-            const std::shared_ptr<Holder> &holder);
+            const std::shared_ptr<sf::RenderWindow> &window);
 
     virtual void draw() = 0;
 
@@ -29,7 +27,6 @@ public:
 protected:
     std::shared_ptr<GameEngine> stateEngine;
     std::shared_ptr<sf::RenderWindow> window;
-    std::shared_ptr<Holder> holder;
 };
 
 

@@ -41,8 +41,6 @@ GameEngine::GameEngine() {
     window = std::make_shared<sf::RenderWindow>();
     window->create(sf::VideoMode(800, 600), "GameEngine");
     window->setFramerateLimit(60);
-
-    holder = std::make_shared<Holder>();
 }
 
 std::shared_ptr<GameEngine> GameEngine::create() {

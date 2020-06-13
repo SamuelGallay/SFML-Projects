@@ -3,7 +3,7 @@
 //
 
 #include "BrownianState.h"
-#include "../Engine/GameEngine.h"
+#include "GameEngine.h"
 #include <cmath>
 
 

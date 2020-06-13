@@ -4,7 +4,9 @@
 
 #include "MenuState.h"
 #include "BrownianState.h"
-#include "../Engine/GameEngine.h"
+#include "GameEngine.h"
+
+#include "ResourceHolder.h"
 
 void MenuState::update(const float dt) {
     sf::Vector2f mousePositionFloat = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
@@ -38,7 +40,11 @@ void MenuState::initialize() {
     circle.setRadius(100.f);
     text.setString("Hello World !");
     text.setPosition(300, 200);
-    text.setFont(holder->font.get("media/FiraSans-Light.otf"));
+    
+    auto myStream = stream_of_file("media/FiraSans-Light.otf");
+    myFont.loadFromStream(myStream);
+    text.setFont(myFont);
+    
     auto flRect = text.getGlobalBounds();
     rectangle.setPosition(flRect.left - 20, flRect.top - 20);
     rectangle.setSize(sf::Vector2f(flRect.width + 40, flRect.height + 40));

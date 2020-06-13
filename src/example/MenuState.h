@@ -1,11 +1,7 @@
-//
-// Created by Samuel Gallay on 2019-06-02.
-//
-
 #ifndef GAMEENGINE_MENUSTATE_H
 #define GAMEENGINE_MENUSTATE_H
 
-#include "../Engine/State.h"
+#include "State.h"
 
 class MenuState : public State{
 public:
@@ -21,6 +17,8 @@ private:
     sf::CircleShape circle;
     sf::Text text;
     sf::RectangleShape rectangle;
+
+    sf::Font myFont;
 };
 
 
