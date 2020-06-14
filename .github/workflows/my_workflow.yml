@@ -27,7 +27,7 @@ jobs:
         cd build
         ls /usr/share/
         ls /usr/share/SFML
-        cmake -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=/usr/share/SFML ..
+        cmake -DCMAKE_INSTALL_PREFIX=../install ..
         cmake --build .
         cmake --install .
         
