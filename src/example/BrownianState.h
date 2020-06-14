@@ -1,7 +1,3 @@
-//
-// Created by Samuel Gallay on 2019-06-02.
-//
-
 #ifndef GAMEENGINE_BROWNIANSTATE_H
 #define GAMEENGINE_BROWNIANSTATE_H
 
@@ -10,7 +6,7 @@
 
 class BrownianState : public State{
 public:
-    virtual void update(const float dt);
+    virtual void update(sf::Time dt);
 
     virtual void handleEvent(sf::Event event);
 
@@ -28,4 +24,4 @@ private:
 };
 
 
-#endif //GAMEENGINE_BROWNIANSTATE_H
+#endif

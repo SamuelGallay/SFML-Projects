@@ -1,17 +1,12 @@
-//
-// Created by Samuel Gallay on 2019-06-02.
-//
-
 #include "BrownianState.h"
 #include "GameEngine.h"
 #include <cmath>
 
-
+#include "utilitary.hpp"
 using namespace std;
 
-float norme(sf::Vector2f v) { return sqrt(v.x * v.x + v.y * v.y); }
-
-void BrownianState::update(const float dt) {
+void BrownianState::update(sf::Time delta_t) {
+    float dt = delta_t.asSeconds();
     for (int i = 0; i < list.getVertexCount(); i++) {
         sf::Vector2f pos = list[i].position;
         if (pos.x < 0)

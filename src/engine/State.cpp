@@ -1,7 +1,3 @@
-//
-// Created by Samuel Gallay on 2019-06-02.
-//
-
 #include "State.h"
 #include "GameEngine.h"
 
@@ -11,8 +7,3 @@ void State::build(
     stateEngine = engine;
     State::window = window;
 }
-
-void State::initialize() {
-
-}
-

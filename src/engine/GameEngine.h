@@ -1,7 +1,3 @@
-//
-// Created by Samuel Gallay on 2019-06-02.
-//
-
 #ifndef GAMEENGINE_GAMEENGINE_H
 #define GAMEENGINE_GAMEENGINE_H
 
@@ -35,4 +31,4 @@ private:
 };
 
 
-#endif //GAMEENGINE_GAMEENGINE_H
+#endif

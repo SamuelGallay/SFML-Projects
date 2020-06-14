@@ -1,5 +1,7 @@
-add_executable(Space main.cpp Physical.cpp Planet.cpp Spaceship.cpp)
+add_library(space_lib Physical.cpp Planet.cpp Spaceship.cpp SpaceState.cpp)
 
-target_link_libraries(Space sfml-graphics)
+target_link_libraries(space_lib PRIVATE holder::rc sfml-graphics engine_lib)
 
-install(TARGETS Space DESTINATION .)
+target_include_directories(space_lib PUBLIC .)
+
+install(TARGETS space_lib DESTINATION .)

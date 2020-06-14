@@ -1,7 +1,3 @@
-//
-// Created by Samuel Gallay on 2019-06-02.
-//
-
 #ifndef GAMEENGINE_STATE_H
 #define GAMEENGINE_STATE_H
 
@@ -12,17 +8,18 @@ class GameEngine;
 
 class State {
 public:
-    virtual void update(const float dt) = 0;
+    virtual void update(sf::Time dt) = 0;
 
     virtual void handleEvent(sf::Event event) = 0;
 
-    void build(
-            const std::shared_ptr<GameEngine> &engine,
-            const std::shared_ptr<sf::RenderWindow> &window);
-
     virtual void draw() = 0;
 
-    virtual void initialize();
+    virtual void initialize() = 0;
+    
+    void build(
+        const std::shared_ptr<GameEngine> &engine,
+        const std::shared_ptr<sf::RenderWindow> &window);
+
 
 protected:
     std::shared_ptr<GameEngine> stateEngine;
@@ -30,4 +27,4 @@ protected:
 };
 
 
-#endif //GAMEENGINE_STATE_H
+#endif

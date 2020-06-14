@@ -18,10 +18,10 @@ include("${CMAKE_BINARY_DIR}/CMakeRC.cmake")
 #========== Targets Configurations ============#
 
 cmrc_add_resource_library(
-    app1-resources
+    resources-holder
 
-    ALIAS app1::rc
-    NAMESPACE app1
+    ALIAS holder::rc
+    NAMESPACE holder
 
     media/FiraSans-Light.otf
     media/spaceship.png

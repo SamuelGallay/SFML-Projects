@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-CMRC_DECLARE(app1);
+CMRC_DECLARE(holder);
 
 int filesize(cmrc::file fd){
     return (reinterpret_cast<uintptr_t>(fd.end()) - reinterpret_cast<uintptr_t>(fd.begin())); 
@@ -22,7 +22,7 @@ sf::Font getMyFont(std::string key){
 
 
 sf::MemoryInputStream stream_of_file(std::string path){
-    auto fs = cmrc::app1::get_filesystem();
+    auto fs = cmrc::holder::get_filesystem();
 
     auto fd = fs.open(path);
 

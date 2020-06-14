@@ -1,10 +1,13 @@
 #include "Spaceship.hpp"
 
+#include "ResourceHolder.h"
+
 #include <cmath>
 
 Spaceship::Spaceship()
 {
-    texture.loadFromFile("media/spaceship.png");
+    auto myStream = stream_of_file("media/spaceship.png");
+    texture.loadFromStream(myStream);
     sprite.setTexture(texture);
     sprite.setOrigin(sprite.getLocalBounds().width/2.f, sprite.getLocalBounds().height/2.f);
     sprite.scale(0.1, 0.1);

@@ -5,7 +5,7 @@
 
 class MenuState : public State{
 public:
-    virtual void update(const float dt);
+    virtual void update(sf::Time dt);
 
     virtual void handleEvent(sf::Event event);
 
@@ -16,10 +16,11 @@ public:
 private:
     sf::CircleShape circle;
     sf::Text text;
+    sf::Text text2;
     sf::RectangleShape rectangle;
-
+    sf::RectangleShape rectangle2;
     sf::Font myFont;
 };
 
 
-#endif //GAMEENGINE_MENUSTATE_H
+#endif

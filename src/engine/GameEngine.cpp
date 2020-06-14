@@ -1,7 +1,3 @@
-//
-// Created by Samuel Gallay on 2019-06-02.
-//
-
 #include "GameEngine.h"
 
 void GameEngine::popState() {
@@ -29,7 +25,7 @@ void GameEngine::gameLoop() {
         while (window->pollEvent(event))
             currentState()->handleEvent(event);
 
-        currentState()->update(dt);
+        currentState()->update(elapsed);
 
         window->clear();
         currentState()->draw();
