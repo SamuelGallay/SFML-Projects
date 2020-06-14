@@ -25,7 +25,9 @@ jobs:
         cd main_repo
         mkdir -p build install
         cd build
-        cmake ..
+        ls /usr/share/
+        ls /usr/share/SFML
+        cmake -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=/usr/share/SFML ..
         cmake --build .
         cmake --install .
         
