@@ -12,7 +12,7 @@ jobs:
     steps:
         
     - name: Installing packages
-      run: sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev libudev-dev libopenal-dev libvorbis-dev libflac++-dev libxrandr-dev libsfml-dev
+      run: sudo apt-get install libsfml-dev
 
     - name: Cloning repository
       uses: actions/checkout@v2
@@ -25,7 +25,7 @@ jobs:
         cd main_repo
         mkdir -p build install
         cd build
-        cmake -DCMAKE_INSTALL_PREFIX=../install ..
+        cmake ..
         cmake --build .
         cmake --install .
         
