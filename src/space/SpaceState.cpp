@@ -1,6 +1,7 @@
 #include "SpaceState.hpp"
 #include "utilitary.hpp"
 #include "ResourceHolder.h"
+#include "GameEngine.h"
 #include <cmath>
 #include <iostream>
 
@@ -101,7 +102,7 @@ void SpaceState::initialize(){
 
     planets.push_back(earth);
 
-    spaceship = std::make_shared<Spaceship>();
+    spaceship = std::make_shared<Spaceship>(holder->texture.get("media/spaceship.png"));
 
     spaceship->setPosition(earth->getPosition().x, earth->getPosition().y - earth->getRadius());
     spaceship->setVelocity(sf::Vector2f(0,0));
@@ -118,7 +119,9 @@ void SpaceState::initialize(){
     timespeed = 1.f;
     fps = 60;
     timesinceupdate = 0;
-    framessinceupdate = 0; 
+    framessinceupdate = 0;
+
+    text.setFont(holder->font.get("media/FiraSans-Light.otf"));
 }
 
 void SpaceState::update(sf::Time dt){
@@ -181,8 +184,8 @@ void SpaceState::handleEvent(sf::Event event){
         window->close();
     
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-        window->close();
-    
+        stateEngine->popState();
+
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down){
         view.zoom(1.5f);
         window->setView(view);
@@ -243,15 +246,7 @@ void SpaceState::draw(){
         window->draw(*i);
     window->draw(*spaceship);
 
-
     window->setView(window->getDefaultView());
-
-    auto myStream = stream_of_file("media/FiraSans-Light.otf");
-    myFont.loadFromStream(myStream);
-    text.setFont(myFont);
-    
-
-
     window->draw(text);
 }
 

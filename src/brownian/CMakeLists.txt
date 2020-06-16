@@ -1,5 +1,7 @@
-add_executable(Brownian main.cpp)
+add_library(brownian_lib BrownianState.cpp)
 
-target_link_libraries(Brownian sfml-graphics)
+target_link_libraries(brownian_lib PRIVATE holder::rc sfml-graphics engine_lib)
 
-install(TARGETS Brownian DESTINATION .)
+target_include_directories(brownian_lib PUBLIC .)
+
+install(TARGETS brownian_lib DESTINATION .)

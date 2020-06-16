@@ -12,7 +12,8 @@ int filesize(cmrc::file fd){
 
 sf::Font getMyFont(std::string key){
     sf::Font temp;
-    sf::MemoryInputStream mystream = stream_of_file(key);
+    sf::MemoryInputStream mystream;
+    stream_of_file(mystream, key);
     bool success = temp.loadFromStream(mystream);
     if (success){
         std::cout << "Load resource : " << key << std::endl;
@@ -21,15 +22,10 @@ sf::Font getMyFont(std::string key){
 }
 
 
-sf::MemoryInputStream stream_of_file(std::string path){
+void stream_of_file(sf::MemoryInputStream &mystream, std::string path){
     auto fs = cmrc::holder::get_filesystem();
 
     auto fd = fs.open(path);
 
-    sf::MemoryInputStream mystream;
     mystream.open(fd.begin(), filesize(fd));
-
-    return mystream;
 }
-
-

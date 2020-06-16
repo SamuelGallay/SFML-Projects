@@ -7,6 +7,7 @@ project(SFML-Projects)
 find_package(SFML 2 COMPONENTS graphics audio REQUIRED)
 find_package(Threads)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -Ofast")
 
 # ------------ Download CmakeRC Resource compiler ----------------#

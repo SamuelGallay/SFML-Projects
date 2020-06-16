@@ -6,14 +6,15 @@
 
 class Spaceship : public Physical
 {
-public:
-    Spaceship();
-    Spaceship(Spaceship const&);
+    public:
+        Spaceship(){}
+    Spaceship(const sf::Texture &texture);
+    //Spaceship(Spaceship const&);
     void input(sf::Time dt);
     
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    sf::Texture texture;
+    //sf::Texture texture;
     sf::Sprite sprite;
 };
 

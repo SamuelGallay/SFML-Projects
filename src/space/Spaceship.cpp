@@ -4,10 +4,8 @@
 
 #include <cmath>
 
-Spaceship::Spaceship()
+Spaceship::Spaceship(const sf::Texture &texture)
 {
-    auto myStream = stream_of_file("media/spaceship.png");
-    texture.loadFromStream(myStream);
     sprite.setTexture(texture);
     sprite.setOrigin(sprite.getLocalBounds().width/2.f, sprite.getLocalBounds().height/2.f);
     sprite.scale(0.1, 0.1);
@@ -16,12 +14,12 @@ Spaceship::Spaceship()
     setMass(3000);
 }
 
-Spaceship::Spaceship(Spaceship const& old) : Physical(old), texture(old.texture)
+/*Spaceship::Spaceship(Spaceship const& old) : Physical(old)
 {
-    sprite.setTexture(texture);
+    sprite.setTexture(old.sprite.getTexture());
     sprite.setOrigin(sprite.getLocalBounds().width/2.f, sprite.getLocalBounds().height/2.f);
     sprite.scale(0.1, 0.1);
-}
+}*/
 
 void Spaceship::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

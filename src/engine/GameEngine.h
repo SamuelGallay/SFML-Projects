@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "State.h"
+#include "ResourceHolder.h"
 
 class GameEngine : public std::enable_shared_from_this<GameEngine> {
 public:
@@ -19,7 +20,7 @@ public:
     template <typename T>
     void buildState(){
         states.push_back(std::make_shared<T>());
-        states.back()->build(shared_from_this(), window);
+        states.back()->build(shared_from_this(), window, holder);
         states.back()->initialize();
     }
 
@@ -28,6 +29,7 @@ private:
 
     std::shared_ptr<sf::RenderWindow> window;
     std::vector<std::shared_ptr<State>> states;
+    std::shared_ptr<Holder> holder;
 };
 
 

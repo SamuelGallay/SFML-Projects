@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include "ResourceHolder.h"
 
 class GameEngine;
 
@@ -17,13 +18,15 @@ public:
     virtual void initialize() = 0;
     
     void build(
-        const std::shared_ptr<GameEngine> &engine,
-        const std::shared_ptr<sf::RenderWindow> &window);
+        const std::shared_ptr<GameEngine>       &engine,
+        const std::shared_ptr<sf::RenderWindow> &window,
+        const std::shared_ptr<Holder>           &holder);
 
 
 protected:
-    std::shared_ptr<GameEngine> stateEngine;
-    std::shared_ptr<sf::RenderWindow> window;
+    std::shared_ptr<GameEngine>         stateEngine;
+    std::shared_ptr<sf::RenderWindow>   window;
+    std::shared_ptr<Holder>             holder;
 };
 
 
