@@ -1,16 +1,16 @@
-#include "Application.h"
+#include "MandelbrotState.h"
 
 #include "Mandelbrot.h"
 
 #include <string>
 #include <chrono>
 #include <iostream>
-#include <thread>
 #include <cmath>
 #include <memory>
 
-Application::Application() : window(sf::VideoMode(1000, 600), "Mandelbrot Render") {
-    window.setFramerateLimit(30);
+void MandelbrotState::initialize() {
+    //window->setSize(sf::Vector2u(1000, 600));
+    window->setFramerateLimit(30);
 
     rendu = std::make_shared<sf::Image>();
     rendu->create(param.definition.x, param.definition.y);
@@ -21,42 +21,38 @@ Application::Application() : window(sf::VideoMode(1000, 600), "Mandelbrot Render
 
     mandelbrot(rendu, param);
     gui.setParameters(param);
-}
 
-void Application::run() {
-    std::thread worker(&Application::runWorker, this);
+    worker = std::thread(&MandelbrotState::runWorker, this);
     worker.detach();
 
-    while (window.isOpen()) {
-        sf::Time delta = clock.restart();
-
-        Parameters oldParam = param;
-
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            handleInputs(event);
-        }
-
-        if (param != oldParam)
-            gui.setParameters(param);
-
-        sf::Texture texture;
-        texture.loadFromImage(*rendu);
-        sf::Sprite sprite(texture);
-        sprite.setScale(static_cast<float>(flou), static_cast<float>(flou));
-
-        window.clear();
-        window.draw(sprite);
-        window.draw(gui);
-        window.display();
-    }
 }
 
-void Application::runWorker() {
+void MandelbrotState::update(sf::Time dt){
+    if (param != oldParam)
+        gui.setParameters(param);
+
+    texture.loadFromImage(*rendu);
+
+    sprite.setTexture(texture);
+
+    sprite.setScale(static_cast<float>(flou), static_cast<float>(flou));
+
+    oldParam = param;
+}
+
+
+void MandelbrotState::draw(){
+    window->draw(sprite);
+    window->draw(gui);
+}
+
+void MandelbrotState::runWorker() {
     sf::Vector2<unsigned int> oldDefinition = param.definition;
     Parameters oldParam = param;
 
-    while (true) {
+    running = true;
+
+    while (running) {
         if (param != oldParam) {
             oldParam = param;
             if (param.definition != oldDefinition) {
@@ -71,11 +67,16 @@ void Application::runWorker() {
     }
 }
 
-void Application::handleInputs(sf::Event event) {
+void MandelbrotState::handleEvent(sf::Event event) {
     if (event.type == sf::Event::Closed)
-        window.close();
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-        window.close();
+        window->close();
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape){
+        running=false;
+        if(worker.joinable())
+            worker.join();
+        //window->setSize(sf::Vector2u(800, 600));
+        stateEngine->popState();
+    }
 
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
         param.center.y -= vitesse / param.zoom;
@@ -88,13 +89,13 @@ void Application::handleInputs(sf::Event event) {
 
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F) {
         flou *= 2;
-        param.definition.x = window.getSize().x / flou;
-        param.definition.y = window.getSize().y / flou;
+        param.definition.x = window->getSize().x / flou;
+        param.definition.y = window->getSize().y / flou;
     }
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R && flou > 1) {
         flou /= 2;
-        param.definition.x = window.getSize().x / flou;
-        param.definition.y = window.getSize().y / flou;
+        param.definition.x = window->getSize().x / flou;
+        param.definition.y = window->getSize().y / flou;
     }
 
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z) {
@@ -115,17 +116,17 @@ void Application::handleInputs(sf::Event event) {
 
     if (event.type == sf::Event::Resized) {
         sf::FloatRect visibleArea(0.f, 0.f, (float) event.size.width, (float) event.size.height);
-        window.setView(sf::View(visibleArea));
-        param.definition.x = window.getSize().x / flou;
-        param.definition.y = window.getSize().y / flou;
+        window->setView(sf::View(visibleArea));
+        param.definition.x = window->getSize().x / flou;
+        param.definition.y = window->getSize().y / flou;
     }
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::W) {
-        std::thread worker2(&Application::wallpaper, this, param);
+        std::thread worker2(&MandelbrotState::wallpaper, this, param);
         worker2.detach();
     }
 }
 
-void Application::wallpaper(Parameters c_param) {
+void MandelbrotState::wallpaper(Parameters c_param) {
     sf::Clock chrono;
     c_param.definition = sf::Vector2<unsigned int>(1920 * 2, 1200 * 2);
     auto temp = std::make_shared<sf::Image>();

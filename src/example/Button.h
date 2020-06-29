@@ -7,7 +7,7 @@
 class Button : public sf::Drawable, public sf::Transformable {
     public:
         void set(std::string t,
-               const sf::Font &f,
+               std::shared_ptr<sf::Font> f,
                std::shared_ptr<sf::RenderWindow> w,
                std::function<void(void)> c);
         void update();

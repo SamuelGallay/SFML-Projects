@@ -3,12 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 #include "Physical.hpp"
+#include <memory>
 
 class Spaceship : public Physical
 {
     public:
         Spaceship(){}
-    Spaceship(const sf::Texture &texture);
+    Spaceship(std::shared_ptr<sf::Texture> texture);
     //Spaceship(Spaceship const&);
     void input(sf::Time dt);
     

@@ -1,6 +1,10 @@
-add_library(engine_lib Button.cpp GameEngine.cpp State.cpp ResourceHolder.cpp utilitary.cpp)
+add_library(engine_lib engine.cpp utilitary.cpp)
 
-target_link_libraries(engine_lib PRIVATE holder::rc sfml-graphics)
+# Not Working Version
+#target_link_libraries(engine_lib PRIVATE holder::rc sfml-graphics sfml-audio)
+
+# Simple Working Version
+target_link_libraries(engine_lib PRIVATE sfml-graphics sfml-audio)
 
 target_include_directories(engine_lib PUBLIC .)
 

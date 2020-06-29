@@ -1,7 +1,7 @@
 #ifndef GAMEENGINE_BROWNIANSTATE_H
 #define GAMEENGINE_BROWNIANSTATE_H
 
-#include "State.h"
+#include "engine.h"
 #include <vector>
 
 class BrownianState : public State{

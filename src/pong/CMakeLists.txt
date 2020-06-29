@@ -1,5 +1,7 @@
-add_executable(Pong main.cpp application.cpp gameState.cpp introState.cpp menuState.cpp particles.cpp state.cpp stateMachine.cpp resourceHolder.cpp)
+add_library(pong_lib PongState.cpp ParticleSystem.cpp)
 
-target_link_libraries(Pong sfml-graphics sfml-audio)
+target_link_libraries(pong_lib PRIVATE engine_lib)
 
-install(TARGETS Pong DESTINATION .)
+target_include_directories(pong_lib PUBLIC .)
+
+install(TARGETS pong_lib DESTINATION .)

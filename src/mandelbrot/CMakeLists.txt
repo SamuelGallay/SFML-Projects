@@ -1,5 +1,7 @@
-add_executable(Mandelbrot main.cpp Mandelbrot.cpp Application.cpp GUI.cpp)
+add_library(mandelbrot_lib Mandelbrot.cpp MandelbrotState.cpp GUI.cpp)
 
-target_link_libraries(Mandelbrot sfml-graphics ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(mandelbrot_lib PRIVATE engine_lib sfml-graphics ${CMAKE_THREAD_LIBS_INIT})
 
-install(TARGETS Mandelbrot DESTINATION .)
+target_include_directories(mandelbrot_lib PUBLIC .)
+
+install(TARGETS mandelbrot_lib DESTINATION .)

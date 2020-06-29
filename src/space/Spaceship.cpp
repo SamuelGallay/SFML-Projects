@@ -1,12 +1,11 @@
 #include "Spaceship.hpp"
 
-#include "ResourceHolder.h"
 
 #include <cmath>
 
-Spaceship::Spaceship(const sf::Texture &texture)
+Spaceship::Spaceship(std::shared_ptr<sf::Texture> texture)
 {
-    sprite.setTexture(texture);
+    sprite.setTexture(*texture);
     sprite.setOrigin(sprite.getLocalBounds().width/2.f, sprite.getLocalBounds().height/2.f);
     sprite.scale(0.1, 0.1);
     setPosition(0, -6371000);

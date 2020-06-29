@@ -1,22 +1,28 @@
-#include "gameState.hpp"
+#include "PongState.hpp"
 
-#include "menuState.hpp"
+void PongState::initialize(){
+    particles = std::make_unique<ParticleSystem>(1000);
+    tailleX = 800;
+    tailleY = 600;
+    tailleBordureRect = 4;
+    rayon = 15;
+    bordureBille = 3;
+    pi = 3.141593;
 
-GameState::GameState( StateMachine& machine, sf::RenderWindow& window, bool replace )
-: State{ machine, window, replace }, particles(1000), tailleX(800), tailleY(600), tailleBordureRect(4), rayon(15), bordureBille(3), pi(3.141593)
-{
     std::cout << "PlayState Init" << std::endl;
     //-- Loading --//
-    ballSoundBuffer = machine.getResourceHolder().ballSoundBuffer;
-    ballSound.setBuffer(ballSoundBuffer);
-    font = machine.getResourceHolder().font;
+    ballSound.setBuffer(*holder->sound_buffer.get("ball.wav"));
+
+    holder->music.get("fantasy.ogg")->setVolume(10);
+    holder->music.get("fantasy.ogg")->play();
+   
     //-- Vue --//
-    vue = window.getDefaultView();
+    vue = window->getDefaultView();
     vue.setCenter(400, 300);
-    window.setView(vue);
+    window->setView(vue);
     
     //-- Particles --//
-    particles.resize(window.getSize().x * 5);
+    particles->resize(window->getSize().x * 5);
     
     //-- Mesures --//
     tailleRect.x = tailleX/25;
@@ -51,19 +57,19 @@ GameState::GameState( StateMachine& machine, sf::RenderWindow& window, bool repl
     cercle.setPointCount(30);
     
     //Message 3
-    message3.setFont(font);
+    message3.setFont(*holder->font.get("FiraSans-Light.otf"));
     message3.setCharacterSize(50);
     message3.setFillColor(sf::Color::White);
     message3.setString("");
     
     //Message Bleu
-    blue.setFont(font);
+    blue.setFont(*holder->font.get("FiraSans-Light.otf"));
     blue.setCharacterSize(50);
     blue.setFillColor(sf::Color::White);
     blue.setString("0");
     
     //Message Rouge
-    red.setFont(font);
+    red.setFont(*holder->font.get("FiraSans-Light.otf"));
     red.setCharacterSize(50);
     red.setFillColor(sf::Color::White);
     red.setString("0");
@@ -83,49 +89,23 @@ GameState::GameState( StateMachine& machine, sf::RenderWindow& window, bool repl
     restart();
 }
 
-void GameState::pause()
+void PongState::draw()
 {
-    std::cout << "PlayState Pause" << std::endl;
+    window->setView(sf::View(sf::FloatRect(0, 0, window->getSize().x, window->getSize().y)));
+    window->draw(fond);
+    window->draw(blue);
+    window->draw(red);
+    window->draw(message3);
+
+    window->setView(vue);
+    window->draw(rectangle);
+    window->draw(rectangle2);
+    window->draw(*particles);
+    window->draw(cercle);
 }
 
-void GameState::resume()
+void PongState::restart()
 {
-    std::cout << "PlayState Resume" << std::endl;
-    enPause = true;
-    clock.restart();
-}
-
-void GameState::update()
-{
-    processEvents();
-    sf::Time deltaTime = clock.restart();
-    paddlesInput(deltaTime);
-    update(deltaTime);
-    updateMessages();
-}
-
-void GameState::draw()
-{
-    m_window.clear(sf::Color::Black);
-    
-    m_window.setView(sf::View(sf::FloatRect(0, 0, m_window.getSize().x, m_window.getSize().y)));
-    m_window.draw(fond);
-    m_window.draw(blue);
-    m_window.draw(red);
-    m_window.draw(message3);
-
-    m_window.setView(vue);
-    m_window.draw(rectangle);
-    m_window.draw(rectangle2);
-    m_window.draw(particles);
-    m_window.draw(cercle);
-    
-    m_window.display();
-}
-
-void GameState::restart()
-{
-    resized();
     paddleSpeed = tailleY;
     vitesseBille = tailleX/2;
     angle = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * pi;
@@ -141,46 +121,44 @@ void GameState::restart()
     enPause = true;
 }
 
-void GameState::processEvents()
+void PongState::handleEvent(sf::Event event)
 {
-    sf::Event event;
-    while (m_window.pollEvent(event))
+    if ( (event.type == sf::Event::Closed) || ( (event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape) ) )
     {
-        if ( (event.type == sf::Event::Closed) || ( (event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape) ) )
-        {
-            m_next = StateMachine::build<MenuState>( m_machine, m_window, false );
+        holder->music.get("fantasy.ogg")->stop();
+        stateEngine->popState();
+    }
+    if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space))
+    {
+        if(!enPause){
+            enPause = true;
         }
-        if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space))
-        {
-            if(!enPause){
-                enPause = true;
-            }
-            else{
-                enPause = false;
-            }
+        else{
+            enPause = false;
         }
-        
+
         if (event.type == sf::Event::Resized)
         {
-            resized();
-            particles.resize(m_window.getSize().x * 5);
+            particles->resize(window->getSize().x * 5);
             enPause = true;
         }
     }
 }
 
-void GameState::updateMessages()
+void PongState::updateMessages()
 {
     message3.setString(std::to_string(static_cast<int>(vitesseBille/40)));
-    message3.setPosition((m_window.getSize().x-message3.getGlobalBounds().width)/2, m_window.getSize().y*0/8);
-    blue.setPosition(m_window.getSize().x/4 - blue.getGlobalBounds().width/2, m_window.getSize().y/2 - blue.getGlobalBounds().height/2);
-    red.setPosition(m_window.getSize().x*3/4 - red.getGlobalBounds().width/2, m_window.getSize().y/2 - red.getGlobalBounds().height/2);
+    message3.setPosition((window->getSize().x-message3.getGlobalBounds().width)/2, window->getSize().y*0/8);
+    blue.setPosition(window->getSize().x/4 - blue.getGlobalBounds().width/2, window->getSize().y/2 - blue.getGlobalBounds().height/2);
+    red.setPosition(window->getSize().x*3/4 - red.getGlobalBounds().width/2, window->getSize().y/2 - red.getGlobalBounds().height/2);
 }
 
-void GameState::update(sf::Time deltaTime)
+void PongState::update(sf::Time dt)
 {
+    paddlesInput(dt);
+    updateMessages();
     if(!enPause)
-    cercle.move(std::cos(angle) * vitesseBille * deltaTime.asSeconds(), std::sin(angle) * vitesseBille * deltaTime.asSeconds());
+    cercle.move(std::cos(angle) * vitesseBille * dt.asSeconds(), std::sin(angle) * vitesseBille * dt.asSeconds());
     
     
     if (cercle.getPosition().x - rayon < rectangle.getPosition().x + tailleRect.x / 2 &&
@@ -223,7 +201,6 @@ void GameState::update(sf::Time deltaTime)
         score.y++;
         red.setString(std::to_string(score.y));
         restart();
-        //m_next = StateMachine::build<MenuState>( m_machine, m_window, false );
     }
     if(cercle.getPosition().x + rayon > tailleX){
         messageBienvenue.setString("Bleu Gagne !!!");
@@ -232,7 +209,6 @@ void GameState::update(sf::Time deltaTime)
         score.x++;
         blue.setString(std::to_string(score.x));
         restart();
-        //m_next = StateMachine::build<MenuState>( m_machine, m_window, false );
     }
     
     if(cercle.getPosition().y - rayon <= 0.f){
@@ -249,13 +225,13 @@ void GameState::update(sf::Time deltaTime)
         vitesseBille *= 1.03f;
     }
     
-    particles.setEmitter(cercle.getPosition());
-    particles.update(deltaTime);
+    particles->setEmitter(cercle.getPosition());
+    particles->update(dt);
 }
 
 
 //-- Déplacement des Paddles --//
-void GameState::paddlesInput(sf::Time deltaTime)
+void PongState::paddlesInput(sf::Time deltaTime)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
         rectangle.move(0.f, -paddleSpeed * deltaTime.asSeconds());

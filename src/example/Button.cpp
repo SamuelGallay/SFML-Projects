@@ -1,11 +1,11 @@
 #include "Button.h"
 
 void Button::set(std::string t,
-               const sf::Font &f,
+               std::shared_ptr<sf::Font> f,
                std::shared_ptr<sf::RenderWindow> w,
                std::function<void(void)> c){
     text.setString(t);
-    text.setFont(f);
+    text.setFont(*f);
     window = w;
     callback = c;
 

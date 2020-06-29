@@ -1,8 +1,9 @@
 #ifndef GAMEENGINE_MENUSTATE_H
 #define GAMEENGINE_MENUSTATE_H
 
-#include "State.h"
 #include "Button.h"
+
+#include "engine.h"
 
 class MenuState : public State{
         public:
@@ -17,6 +18,8 @@ class MenuState : public State{
         private:
                 Button button;
                 Button button2;
+                Button button3;
+                Button button4;
 };
 
 

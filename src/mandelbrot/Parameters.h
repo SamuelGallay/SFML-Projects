@@ -36,9 +36,9 @@ struct Parameters {
         liste.push_back(sf::Color::Magenta);
         liste.push_back(sf::Color::Red);
 
-        definition = sf::Vector2<unsigned int>(1000, 600);
+        definition = sf::Vector2<unsigned int>(800, 600);
         iterMax = 50;
-        center = sf::Vector2<double>(-0.75, 0.0);
+        center = sf::Vector2<double>(-0.5, 0.0);
         zoom = 1.0;
 
     }

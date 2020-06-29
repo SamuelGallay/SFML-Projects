@@ -1,7 +1,5 @@
 #include "SpaceState.hpp"
 #include "utilitary.hpp"
-#include "ResourceHolder.h"
-#include "GameEngine.h"
 #include <cmath>
 #include <iostream>
 
@@ -102,7 +100,7 @@ void SpaceState::initialize(){
 
     planets.push_back(earth);
 
-    spaceship = std::make_shared<Spaceship>(holder->texture.get("media/spaceship.png"));
+    spaceship = std::make_shared<Spaceship>(holder->texture.get("spaceship.png"));
 
     spaceship->setPosition(earth->getPosition().x, earth->getPosition().y - earth->getRadius());
     spaceship->setVelocity(sf::Vector2f(0,0));
@@ -121,7 +119,7 @@ void SpaceState::initialize(){
     timesinceupdate = 0;
     framessinceupdate = 0;
 
-    text.setFont(holder->font.get("media/FiraSans-Light.otf"));
+    text.setFont(*holder->font.get("FiraSans-Light.otf"));
 }
 
 void SpaceState::update(sf::Time dt){

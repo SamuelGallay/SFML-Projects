@@ -1,5 +1,4 @@
 #include "BrownianState.h"
-#include "GameEngine.h"
 #include <cmath>
 
 #include "utilitary.hpp"

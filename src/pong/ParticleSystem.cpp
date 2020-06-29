@@ -1,4 +1,4 @@
-#include "particles.hpp"
+#include "ParticleSystem.hpp"
 
 ParticleSystem::ParticleSystem(unsigned int count) :
 m_particles(count),

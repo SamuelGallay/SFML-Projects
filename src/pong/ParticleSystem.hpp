@@ -27,4 +27,4 @@ private:
     sf::Color couleur;
 };
 
-#endif /* particles_hpp */
+#endif
