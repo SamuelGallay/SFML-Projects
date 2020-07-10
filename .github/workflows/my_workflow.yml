@@ -11,12 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         
-    - name: Installing packages
+    - name: Installing SFML
       run: |
-        # sudo apt-get build-dep libsfml-dev
         wget https://www.sfml-dev.org/files/SFML-2.5.1-linux-gcc-64-bit.tar.gz
         tar -xf SFML-2.5.1-linux-gcc-64-bit.tar.gz
-        sudo apt-get install emacs
 
     - name: Cloning repository
       uses: actions/checkout@v2
