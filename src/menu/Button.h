@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <functional>
 
 class Button : public sf::Drawable, public sf::Transformable {
     public:
