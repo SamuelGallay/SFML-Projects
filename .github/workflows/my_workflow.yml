@@ -13,10 +13,10 @@ jobs:
         
     - name: Installing packages
       run: |
-        sudo apt-get build-dep libsfml-dev
+        # sudo apt-get build-dep libsfml-dev
         wget https://github.com/SFML/SFML/releases/@download/2.5.1/SFML-2.5.1-linux-gcc-64-bit.tar.gz
         tar -xf SFML-2.5.1-linux-gcc-64-bit.tar.gz
-        
+        sudo apt-get install emacs
 
     - name: Cloning repository
       uses: actions/checkout@v2
