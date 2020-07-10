@@ -19,7 +19,7 @@ jobs:
         tar -xf SFML-2.5.1-linux-gcc-64-bit.tar.gz
         cd SFML-2.5.1/lib
         mkdir tmp
-        for f in libsfml-*.so; do cp -L $f tmp/ && rm $f && cp tmp/$f . && ldconfig -l $f; done
+        for f in libsfml-*.so.2.5; do cp -L $f tmp/ && rm $f && cp tmp/$f . && ldconfig -l $f; done
 
     - name: Cloning repository
       uses: actions/checkout@v2
