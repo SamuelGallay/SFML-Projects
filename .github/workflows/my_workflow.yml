@@ -29,6 +29,7 @@ jobs:
         cd main_repo
         mkdir -p build install
         cd build
+        ls ../../SFML-2.5.1/lib/cmake/SFML
         cmake -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_BUILD_TYPE=Release -DSFML_DIR=../../SFML-2.5.1/lib/cmake/SFML ..
         cmake --build .
         cmake --install .
