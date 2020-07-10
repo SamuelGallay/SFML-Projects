@@ -2,32 +2,6 @@
 
 
 //---------------------------------------------------------------------//
-// ResourceHolder - Not Working Version
-//---------------------------------------------------------------------//
-
-/*
-#include <cmrc/cmrc.hpp>
-
-CMRC_DECLARE(holder);
-
-void stream_of_file(sf::MemoryInputStream &mystream, std::string path){
-    auto fs = cmrc::holder::get_filesystem();
-
-    auto fd = fs.open(path);
-
-    int filesize = reinterpret_cast<uintptr_t>(fd.end()) - reinterpret_cast<uintptr_t>(fd.begin());
-
-    mystream.open(fd.begin(), filesize);
-}
-
-template<>
-bool ResourceHolder<std::unique_ptr<sf::Music>>::m_loadFromStream(std::unique_ptr<sf::Music> &elt, sf::MemoryInputStream &s){
-    elt = std::make_unique<sf::Music>();
-    return elt->openFromStream(s);
-}
-*/
-
-//---------------------------------------------------------------------//
 // ResourceHolder - Simple Working Version
 //---------------------------------------------------------------------//
 void stream_of_file(sf::FileInputStream &mystream, std::string path){

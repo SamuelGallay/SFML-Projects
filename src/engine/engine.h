@@ -9,54 +9,12 @@
 #include <memory>
 #include <map>
 
-
 //---------------------------------------------------------------------//
-// ResourceHolder - Not Working Version
+// Platform Dependent Code
 //---------------------------------------------------------------------//
 
-/*
-void stream_of_file(sf::MemoryInputStream &mystream, std::string path);
+std::string getExecutablePath();
 
-template<typename T>
-class ResourceHolder {
-    public:
-        const T& get(std::string key) {
-            auto it = list.find(key);
-            if (it != list.end()) {
-                std::cout << "Access resource : " << key << std::endl;
-                return it->second;
-            }
-            else {
-                T& elt = list[key];
-
-                stream_of_file(slist[key], prefixPath + key);
-
-                bool success = m_loadFromStream(elt, slist[key]);
-
-                if (!success)
-                    std::cout << "Failed to load resource : " << key << std::endl;
-                else
-                    std::cout << "Load resource : " << key << std::endl;
-                return elt;
-            }
-        }
-
-        bool m_loadFromStream(T& elt, sf::MemoryInputStream& s){
-            return elt.loadFromStream(s);
-        }
-
-        ResourceHolder(){
-            prefixPath = "media/";
-        }
-
-    private:
-        std::map<std::string, T> list;
-        std::map<std::string, sf::MemoryInputStream> slist;
-        std::string prefixPath;
-};
-template<>
-bool ResourceHolder<std::unique_ptr<sf::Music>>::m_loadFromStream(std::unique_ptr<sf::Music> &elt, sf::MemoryInputStream &s);
-*/
 
 //---------------------------------------------------------------------//
 // ResourceHolder - Simple Working Version
@@ -93,7 +51,12 @@ class ResourceHolder {
         }
 
         ResourceHolder(){
-            prefixPath = "media/";
+            std::string path = getExecutablePath();
+            std::size_t found = path.find_last_of("/\\");
+
+            prefixPath = path.substr(0,found) + "/media/";
+
+            std::cout << "Prefix Path : " << prefixPath << std::endl;
         }
 
     private:
