@@ -20,6 +20,6 @@ chmod +x linuxdeploy-x86_64.AppImage
 
 mkdir -p appfolder
 
-./linuxdeploy-x86_64.AppImage --appdir appfolder --output appimage -d ../misc/desktop_file.desktop -i ../misc/icon.png -e ../install/Menu
+./linuxdeploy-x86_64.AppImage --appdir appfolder --output appimage -d ../misc/desktop_file.desktop -i ../misc/icon.png -e ../build/src/menu/Menu
 
 mv Samuel-Menu-*.AppImage SamuelMenu.AppImage

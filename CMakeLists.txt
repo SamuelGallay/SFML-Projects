@@ -10,6 +10,10 @@ find_package(Threads)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -Wall -Wextra")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -Ofast")
 
-install(DIRECTORY media DESTINATION .)
-
 add_subdirectory(src)
+
+add_custom_target(copy-files ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_SOURCE_DIR}/media
+                ${CMAKE_CURRENT_BINARY_DIR}/src/menu/media
+        DEPENDS Menu)
