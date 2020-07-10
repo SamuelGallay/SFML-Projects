@@ -17,9 +17,6 @@ jobs:
         sudo apt-get install -y libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev
         wget https://www.sfml-dev.org/files/SFML-2.5.1-linux-gcc-64-bit.tar.gz
         tar -xf SFML-2.5.1-linux-gcc-64-bit.tar.gz
-        cd SFML-2.5.1/lib
-        mkdir tmp
-        for f in libsfml-*.so.2.5; do cp -L $f tmp/ && rm $f && cp tmp/$f . && ldconfig -l $f; done
 
     - name: Cloning repository
       uses: actions/checkout@v2
@@ -32,7 +29,7 @@ jobs:
         cd main_repo
         mkdir -p build install
         cd build
-        cmake -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_BUILD_TYPE=Release -DSFML_ROOT=../../SFML-2.5.1 ..
+        cmake -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_BUILD_TYPE=Release -DSFML_DIR=../../SFML-2.5.1/lib/cmake/SFML ..
         cmake --build .
         cmake --install .
         
