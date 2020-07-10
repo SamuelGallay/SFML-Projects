@@ -12,7 +12,11 @@ jobs:
     steps:
         
     - name: Installing packages
-      run: sudo apt-get install libsfml-dev
+      run: |
+        sudo apt-get build-dep libsfml-dev
+        wget https://github.com/SFML/SFML/releases/@download/2.5.1/SFML-2.5.1-linux-gcc-64-bit.tar.gz
+        tar -xf SFML-2.5.1-linux-gcc-64-bit.tar.gz
+        
 
     - name: Cloning repository
       uses: actions/checkout@v2
@@ -25,9 +29,7 @@ jobs:
         cd main_repo
         mkdir -p build install
         cd build
-        ls /usr/share/
-        ls /usr/share/SFML
-        cmake -DCMAKE_INSTALL_PREFIX=../install ..
+        cmake -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_BUILD_TYPE=Release -DSFML_ROOT=../../SFML-2.5.1 ..
         cmake --build .
         cmake --install .
         
