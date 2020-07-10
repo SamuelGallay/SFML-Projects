@@ -17,6 +17,7 @@ jobs:
         sudo apt-get install -y libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev
         wget https://www.sfml-dev.org/files/SFML-2.5.1-linux-gcc-64-bit.tar.gz
         tar -xf SFML-2.5.1-linux-gcc-64-bit.tar.gz
+        pwd
 
     - name: Cloning repository
       uses: actions/checkout@v2
