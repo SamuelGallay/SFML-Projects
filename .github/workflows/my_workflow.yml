@@ -18,7 +18,8 @@ jobs:
         wget https://www.sfml-dev.org/files/SFML-2.5.1-linux-gcc-64-bit.tar.gz
         tar -xf SFML-2.5.1-linux-gcc-64-bit.tar.gz
         cd SFML-2.5.1/lib
-        for f in libsfml-*.so.2.5.1; do ldconfig -l $f; done
+        mkdir tmp
+        for f in libsfml-*.so; do cp -L $f tmp/ && rm $f && cp tmp/$f . && ldconfig -l $f; done
 
     - name: Cloning repository
       uses: actions/checkout@v2
