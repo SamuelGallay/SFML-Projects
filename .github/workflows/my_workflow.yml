@@ -37,6 +37,7 @@ jobs:
       shell: bash
       run: |
         cd main_repo
+        ldd install/Menu
         ./misc/build_appimage.sh
         
     - name: Archive production artifacts
