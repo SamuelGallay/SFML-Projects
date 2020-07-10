@@ -3,10 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "engine.h"
+
 class Player : public sf::Drawable, public sf::Transformable
 {
 public:
-    Player();
+    Player(std::shared_ptr<sf::Texture> t);
     void changeDirection(sf::Vector2i direction, float temps);
     void update();
     
@@ -15,7 +17,7 @@ private:
     
     
 private:
-    sf::Texture terraTexture;
+    std::shared_ptr<sf::Texture> terraTexture;
     sf::Sprite terra;
     sf::Clock clock;
     

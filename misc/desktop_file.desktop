@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Name=Brownian
+Name=Samuel-Menu
 Comment=Simple Brownian Motion
-Exec=Example
+Exec=Menu
 Icon=icon
 Categories=Graphics;

@@ -1,11 +1,9 @@
 #include "TileMap.hpp"
 
-#include "ResourcePath.hpp"
-
-bool TileMap::load(const std::string& tileset, sf::Vector2u tileSize, std::vector<std::vector<int> > tiles, unsigned int width, unsigned int height)
+bool TileMap::load(std::shared_ptr<sf::Texture> t, sf::Vector2u tileSize, std::vector<std::vector<int> > tiles, unsigned int width, unsigned int height)
 {
-    m_tileset.loadFromFile(resourcePath() + tileset);
-    
+    m_tileset = *t;
+
     // on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
     m_vertices.setPrimitiveType(sf::Quads);
     m_vertices.resize(width * height * 4);

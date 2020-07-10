@@ -27,7 +27,7 @@ void MandelbrotState::initialize() {
 
 }
 
-void MandelbrotState::update(sf::Time dt){
+void MandelbrotState::update(sf::Time){
     if (param != oldParam)
         gui.setParameters(param);
 

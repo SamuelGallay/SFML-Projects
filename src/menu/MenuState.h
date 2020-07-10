@@ -20,6 +20,7 @@ class MenuState : public State{
                 Button button2;
                 Button button3;
                 Button button4;
+                Button button5;
 };
 
 

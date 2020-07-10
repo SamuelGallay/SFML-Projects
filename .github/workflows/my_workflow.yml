@@ -35,12 +35,10 @@ jobs:
       shell: bash
       run: |
         cd main_repo
-        mkdir appimage_packaging
-        cd appimage_packaging
-        ../misc/build_appimage.sh
+        ./misc/build_appimage.sh
         
     - name: Archive production artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: appimage_dir
-        path: main_repo/appimage_packaging
+        name: SamuelMenu
+        path: main_repo/appimage_packaging/SamuelMenu.AppImage

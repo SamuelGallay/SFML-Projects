@@ -1,10 +1,8 @@
 #include "Player.hpp"
 
-#include "ResourcePath.hpp"
-
-Player::Player(){
-    terraTexture.loadFromFile(resourcePath() + "terra.png");
-    terra.setTexture(terraTexture);
+Player::Player(std::shared_ptr<sf::Texture> t){
+    terraTexture = t;
+    terra.setTexture(*terraTexture);
     terra.setTextureRect(sf::IntRect(32, 0, 32, 32));
     terra.setOrigin(16, 16);
 }
@@ -40,7 +38,7 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
     states.transform *= getTransform();
     
     // on applique la texture du tileset
-    states.texture = &terraTexture;
+    states.texture = &*terraTexture;
     
     target.draw(terra, states);
 }

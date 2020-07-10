@@ -3,13 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-
+#include <memory>
 
 class TileMap : public sf::Drawable, public sf::Transformable
 {
 public:
     
-    bool load(const std::string& tileset, sf::Vector2u tileSize, std::vector<std::vector<int> > tiles, unsigned int width, unsigned int height);
+    bool load(std::shared_ptr<sf::Texture> t, sf::Vector2u tileSize, std::vector<std::vector<int> > tiles, unsigned int width, unsigned int height);
     
 private:
     

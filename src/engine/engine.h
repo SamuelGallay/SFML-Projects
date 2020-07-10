@@ -135,6 +135,8 @@ class State {
 
         virtual void initialize() = 0;
 
+        virtual void onReload();
+
         void build(
             const std::shared_ptr<GameEngine>       &engine,
             const std::shared_ptr<sf::RenderWindow> &window,

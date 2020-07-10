@@ -6,7 +6,7 @@ using namespace std;
 
 void BrownianState::update(sf::Time delta_t) {
     float dt = delta_t.asSeconds();
-    for (int i = 0; i < list.getVertexCount(); i++) {
+    for (unsigned int i = 0; i < list.getVertexCount(); i++) {
         sf::Vector2f pos = list[i].position;
         if (pos.x < 0)
             velocity[i].x = abs(velocity[i].x);
@@ -62,13 +62,13 @@ void BrownianState::draw() {
 void BrownianState::initialize() {
     Nparticles = 10000;
     list = sf::VertexArray(sf::Points, Nparticles);
-    for (int i = 0; i < list.getVertexCount(); i++) {
+    for (unsigned int i = 0; i < list.getVertexCount(); i++) {
         list[i].position =
                 sf::Vector2f(rand() % window->getSize().x, rand() % window->getSize().y);
     }
 
     velocity = vector<sf::Vector2f>(Nparticles);
-    for (int i = 0; i < velocity.size(); i++) {
+    for (unsigned int i = 0; i < velocity.size(); i++) {
         velocity[i] = sf::Vector2f(rand() % 200 - 100, rand() % 200 - 100);
     }
 

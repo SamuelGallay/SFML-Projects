@@ -1,5 +1,5 @@
-add_executable(Fantasy main.cpp Application.cpp Player.cpp Level.cpp TileMap.cpp ResourcePath.cpp Perlin.cpp)
+add_library(fantasy_lib FantasyState.cpp Player.cpp Level.cpp TileMap.cpp Perlin.cpp)
 
-target_link_libraries(Fantasy sfml-graphics sfml-audio)
+target_link_libraries(fantasy_lib PRIVATE engine_lib sfml-graphics sfml-audio)
 
-install(TARGETS Fantasy DESTINATION .)
+target_include_directories(fantasy_lib PUBLIC .)
