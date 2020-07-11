@@ -44,3 +44,8 @@ jobs:
       with:
         name: SamuelMenu
         path: main_repo/appimage_packaging/SamuelMenu.AppImage
+
+    - name: Deploy to Github Releases
+      run: |
+        cd main_repo
+        ./misc/upload_assets.sh ${{ secrets.PASSWD }} appimage_packaging/SamuelMenu.AppImage
