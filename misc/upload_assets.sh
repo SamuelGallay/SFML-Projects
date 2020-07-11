@@ -26,8 +26,8 @@ JSON=$(cat <<EndOfMessage
 {
   "tag_name": "auto-$SHORT_HASH",
   "target_commitish": "master",
-  "name": "Latest Release",
-  "body": "Last commit : $(date)",
+  "name": "Latest Release $(date +%F)",
+  "body": "Last update $(date +%A\ %e\ %B\ %4Y)",
   "draft": false,
   "prerelease": false
 }
