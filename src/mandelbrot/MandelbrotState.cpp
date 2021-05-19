@@ -1,6 +1,7 @@
 #include "MandelbrotState.h"
 
 #include "Mandelbrot.h"
+#include "utilitary.hpp"
 
 #include <string>
 #include <chrono>
@@ -9,44 +10,38 @@
 #include <memory>
 
 void MandelbrotState::initialize() {
-    //window->setSize(sf::Vector2u(1000, 600));
     window->setFramerateLimit(30);
-
-    rendu = std::make_shared<sf::Image>();
-    rendu->create(param.definition.x, param.definition.y);
-
     vitesse = 0.6;
     vitZoom = 2.0;
     flou = 1;
 
-    mandelbrot(rendu, param);
-    gui.setParameters(param);
+    rendu = std::make_shared<sf::Image>();
+    onResize();
 
-    worker = std::thread(&MandelbrotState::runWorker, this);
-    worker.detach();
-
+    gui = std::make_shared<GUI>(holder->font.get("FiraSans-Light.otf"));
 }
 
 void MandelbrotState::update(sf::Time){
-    if (param != oldParam)
-        gui.setParameters(param);
+    gui->setParameters(param);
 
     texture.loadFromImage(*rendu);
 
     sprite.setTexture(texture);
-
-    sprite.setScale(static_cast<float>(flou), static_cast<float>(flou));
 
     oldParam = param;
 }
 
 
 void MandelbrotState::draw(){
+    window->setView(sf::View(sf::FloatRect(0, 0, param.definition.x, param.definition.y)));
     window->draw(sprite);
-    window->draw(gui);
+    setStandardView(window);
+    window->draw(*gui);
 }
 
 void MandelbrotState::runWorker() {
+    std::cout << "Creating Thread\n";
+
     sf::Vector2<unsigned int> oldDefinition = param.definition;
     Parameters oldParam = param;
 
@@ -61,10 +56,10 @@ void MandelbrotState::runWorker() {
             }
             mandelbrot(rendu, param);
         } else {
-            std::chrono::milliseconds timespan(20);
-            std::this_thread::sleep_for(timespan);
+            //std::this_thread::sleep_for(std::chrono::milliseconds(20));
         }
     }
+    std::cout << "Closing Thread\n";
 }
 
 void MandelbrotState::handleEvent(sf::Event event) {
@@ -74,7 +69,6 @@ void MandelbrotState::handleEvent(sf::Event event) {
         running=false;
         if(worker.joinable())
             worker.join();
-        //window->setSize(sf::Vector2u(800, 600));
         stateEngine->popState();
     }
 
@@ -114,16 +108,22 @@ void MandelbrotState::handleEvent(sf::Event event) {
         param.iterMax /= 1.1;
     }
 
-    if (event.type == sf::Event::Resized) {
-        sf::FloatRect visibleArea(0.f, 0.f, (float) event.size.width, (float) event.size.height);
-        window->setView(sf::View(visibleArea));
-        param.definition.x = window->getSize().x / flou;
-        param.definition.y = window->getSize().y / flou;
-    }
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::W) {
         std::thread worker2(&MandelbrotState::wallpaper, this, param);
         worker2.detach();
     }
+}
+
+void MandelbrotState::onResize(){
+    running=false;
+    //if(worker.joinable())
+    worker.join();
+    //std::cout << "H1\n";
+    rendu->create(window->getSize().x, window->getSize().y);
+    param.definition.x = window->getSize().x / flou;
+    param.definition.y = window->getSize().y / flou;
+    worker = std::thread(&MandelbrotState::runWorker, this);
+    worker.detach();
 }
 
 void MandelbrotState::wallpaper(Parameters c_param) {

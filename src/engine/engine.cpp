@@ -27,11 +27,8 @@ void State::build(
     State::holder = holder;
 }
 
-void State::onReload(){
-    sf::View v = window->getView();
-    v.setSize((float) window->getSize().x, (float) window->getSize().y);
-    v.setCenter((float) window->getSize().x / 2.f, (float) window->getSize().y / 2.f);
-    window->setView(v);
+void State::onResize(){
+
 }
 
 //---------------------------------------------------------------------//
@@ -40,7 +37,7 @@ void State::onReload(){
 void GameEngine::popState(){
     states.pop_back();
     if (!states.empty())
-        states.back()->onReload();
+        currentState()->onResize();
 }
 
 std::shared_ptr<State> GameEngine::currentState(){
@@ -59,15 +56,13 @@ void GameEngine::gameLoop(){
         sf::Event event;
         while (window->pollEvent(event)){
             if (event.type == sf::Event::Resized){
-                sf::View v = window->getView();
-                v.setSize((float) window->getSize().x, (float) window->getSize().y);
-                v.setCenter((float) window->getSize().x / 2.f, (float) window->getSize().y / 2.f);
-                window->setView(v);
-            }
-            currentState()->handleEvent(event);
-            if (currentState() == nullptr){
-                std::cout << "End of game loop." << std::endl;
-                return;
+                currentState()->onResize();
+            } else {
+                currentState()->handleEvent(event);
+                if (currentState() == nullptr){
+                    std::cout << "End of game loop." << std::endl;
+                    return;
+                }
             }
         }
 

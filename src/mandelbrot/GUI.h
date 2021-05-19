@@ -8,7 +8,7 @@
 
 class GUI : public sf::Drawable, public sf::Transformable {
 public:
-    GUI();
+    GUI(std::shared_ptr<sf::Font> font);
 
     void setParameters(Parameters param);
 

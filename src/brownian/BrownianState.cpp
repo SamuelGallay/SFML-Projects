@@ -80,3 +80,8 @@ void BrownianState::initialize() {
 
     path = sf::VertexArray(sf::LineStrip);
 }
+
+void BrownianState::onResize(){
+    setStandardView(window);
+    initialize();
+}

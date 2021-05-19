@@ -5,6 +5,7 @@
 
 #include <sstream>
 #include <cmath>
+#include <memory>
 
 float norme(sf::Vector2f v);
 
@@ -16,5 +17,7 @@ std::string to_string_with_precision(const T a_value, const int n = 1)
     out << std::fixed << a_value;
     return out.str();
 }
+
+void setStandardView(std::shared_ptr<sf::RenderWindow> w);
 
 #endif

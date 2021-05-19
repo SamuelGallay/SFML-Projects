@@ -6,9 +6,8 @@ void GUI::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(text);
 }
 
-GUI::GUI() {
-    font.loadFromFile("media/OpenSans-Light.ttf");
-    text.setFont(font);
+GUI::GUI(std::shared_ptr<sf::Font> font) {
+    text.setFont(*font);
     text.setCharacterSize(24);
 }
 

@@ -6,6 +6,8 @@
 #include "MandelbrotState.h"
 #include "FantasyState.hpp"
 
+#include "utilitary.hpp"
+
 #include <iostream>
 
 void MenuState::update(sf::Time) {
@@ -53,3 +55,6 @@ void MenuState::initialize() {
     button5.setPosition(300, 450);
 }
 
+void MenuState::onResize(){
+  setStandardView(window);
+}

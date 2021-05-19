@@ -15,6 +15,8 @@ class MenuState : public State{
 
                 virtual void initialize();
 
+                virtual void onResize();
+
         private:
                 Button button;
                 Button button2;

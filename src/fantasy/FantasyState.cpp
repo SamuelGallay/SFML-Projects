@@ -1,4 +1,5 @@
 #include "FantasyState.hpp"
+#include "utilitary.hpp"
 
 void FantasyState::initialize(){
     window->setVerticalSyncEnabled(true);
@@ -78,7 +79,7 @@ void FantasyState::draw(){
     window->draw(*niveau);
     window->draw(*player);
 
-    window->setView(sf::View(sf::FloatRect( 0.f, 0.f, window->getSize().x, window->getSize().y) ) );
+    setStandardView(window);
 
     window->draw(text);
 }

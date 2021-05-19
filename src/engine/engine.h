@@ -98,7 +98,7 @@ class State {
 
         virtual void initialize() = 0;
 
-        virtual void onReload();
+        virtual void onResize();
 
         void build(
             const std::shared_ptr<GameEngine>       &engine,

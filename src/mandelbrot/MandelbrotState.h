@@ -16,6 +16,7 @@ class MandelbrotState : public State
         void update(sf::Time dt);
         void draw();
         void handleEvent(sf::Event event);
+        void onResize();
 
     private:
         void runWorker();
@@ -28,7 +29,7 @@ class MandelbrotState : public State
         sf::Sprite sprite;
         Parameters oldParam;
         Parameters param;
-        GUI gui;
+        std::shared_ptr<GUI> gui;
         bool running;
         std::thread worker;
 };

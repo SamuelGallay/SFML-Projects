@@ -14,6 +14,8 @@ public:
 
     virtual void initialize();
 
+    virtual void onResize();
+
 private:
     int Nparticles;
     sf::CircleShape bigParticle;
